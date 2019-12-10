@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Dinos in Space</title>
+</head>
+
+<body>
+    <!--written by Chris, Jake, and Kevin-->
+    <div class="container navDiv">
+        <div class="row">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-dark bg-dark">
+                    <a class="navbar-brand" href="#">
+                        <img src="./assets/images/space.png" width="30" height="30" class="d-inline-block align-top"
+                            alt="">
+                        Dino in Space
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="index.html">Home <span class="sr-only"></span></a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="contact.html">Contact <span class="sr-only"></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container rowTwo">
+        <div class="row">
+            <div class="col-lg-6.5" id="canvas-container">
+                <canvas width="650" height="512" id="canvas"></canvas>
+                <h5 id="instructions"> Use the Up Arrow Key to Jump. Good Luck!</h3>
+                <div class="input-group mb-3" id="userInput">
+                    <input type="text" class="form-control" placeholder="Enter a username!" aria-label="Username" id="player">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="start">Play</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-.5"></div>
+            <div class="col-lg-5" id="leaderboard-container">
+                <div class="card text-white bg-dark" style="margin-bottom: 5px;">
+                    <div class="card-header">Leaderboards</div>
+                    <div class="card-body p-0" id="leaderboard-card" style="overflow: scroll; max-height: 300px;">
+                        <table class="table table-striped table-bordered table-dark">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Position</th>
+                                    <th scope="col">Player</th>
+                                    <th scope="col">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body" id="score">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!--Beginning of Chat-->
+                <div id="app">
+                    <div v-if="state == 0">
+                        <h4>Chatroom Login</h4>
+                        <form @submit.prevent="setUsername">
+                            <input type="text" placeholder="Username..." v-model:value="username" />
+                            <input type="submit" value="Join" />
+                        </form>
+                        <button @click="continueWithoutUsername">Join as a Guest</button>
+                    </div>
+                    <div v-if="state == 1">
+                        <ul id="chatbox" style="overflow: scroll; height: 200px;">
+                            <li v-for="message in messages">
+                                <b>{{ message.user }}:</b> {{ message.message }}
+                            </li>
+                        </ul>
+                        <form @submit.prevent="sendMessage">
+                            <input type="text" placeholder="Message..." v-model:value="message" />
+                            <input type="submit" value="Send" />
+                        </form>
+                    </div>
+                </div>
+                <!-- End of Chat -->
+
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="assets/javascript/game.js"></script>
+        <script src="view.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+</body>
+
+</html>
